@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tapioca/tapioca.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:video_editors/controllers/form_controller.dart';
 import 'package:video_editors/controllers/select_item_controller.dart';
 import 'package:video_editors/screens/downloaded_video_screen.dart';
@@ -866,10 +867,26 @@ class _MyAppStateTest extends State<EditorScreenTest> {
     try {
       XFile? video = widget.video;
       if (video != null) {
+        var tempDir = await getTemporaryDirectory();
         setState(() {
           _video = video;
           isLoading = true;
         });
+
+        // Redimensionar el video a 720x1280
+        final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
+        String outputFilePath = '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}resized.mp4';
+
+        int rc = await _flutterFFmpeg.execute(
+            '-i ${_video.path} -vf "scale=720:1280" $outputFilePath');
+
+        if (rc == 0) {
+          // La redimensión fue exitosa, utiliza el nuevo archivo de video
+          _video = XFile(outputFilePath);
+        } else {
+          // La redimensión falló, utiliza el archivo original
+          debugPrint('Error al redimensionar el video');
+        }
       }
     } catch (error) {
       debugPrint(error.toString());
