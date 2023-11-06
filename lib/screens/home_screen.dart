@@ -180,13 +180,13 @@ class _MyAppStateTest extends State<EditorScreenTest> {
                   Platform.isAndroid ? count + 10 : count + 10;
               _texts.add(_DraggableText(
                   text: value,
-                  size: 16,
+                  size: 28,
                   x: Platform.isAndroid
-                      ? 160
-                      : 160,
+                      ? 360
+                      : 360,
                   y: Platform.isAndroid
-                      ? 575
-                      : 555,
+                      ? 1180
+                      : 1180,
                   xG: Platform.isAndroid
                       ? 150
                       : 150,
@@ -202,13 +202,13 @@ class _MyAppStateTest extends State<EditorScreenTest> {
                   Platform.isAndroid ? count + 10 : count + 10;
               _texts.add(_DraggableText(
                   text: value,
-                  size: 16,
+                  size: 28,
                   x: Platform.isAndroid
-                      ? 160
-                      : 160,
+                      ? 450
+                      : 450,
                   y: Platform.isAndroid
-                      ? 590
-                      : 570,
+                      ? 1200
+                      : 1200,
                   xG: Platform.isAndroid
                       ? 150
                       : 150,
@@ -228,11 +228,11 @@ class _MyAppStateTest extends State<EditorScreenTest> {
           text: _formController.title.value,
           size: 10,
           x: Platform.isAndroid
-              ? 150
-              : 200,
+              ? 300
+              : 400,
           y: Platform.isAndroid
-              ? 60
-              : 60,
+              ? 120
+              : 120,
           xG: Platform.isAndroid
               ? 150
               : 200,
@@ -245,11 +245,11 @@ class _MyAppStateTest extends State<EditorScreenTest> {
           text: _formController.subtitle.value,
           size: 10,
           x: Platform.isAndroid
-              ? 150
+              ? 300
               : 200,
           y: Platform.isAndroid
-              ? 70
-              : 70,
+              ? 140
+              : 140,
           xG: Platform.isAndroid
               ? 150
               : 200,
@@ -257,26 +257,16 @@ class _MyAppStateTest extends State<EditorScreenTest> {
               ? 110
               : 110));
     }
-    /*if (_formController.address.value.isNotEmpty) {
-      _texts.add(_DraggableText(
-          text: _formController.address.value,
-          color: Colors.black,
-          size: 10,
-          //x: 200,
-          //y: 80,
-        x: MediaQuery.of(context).size.width * 0.2,
-        y: MediaQuery.of(context).size.height * 0.08,));
-    }*/
     if (_formController.price.value.isNotEmpty) {
       _texts.add(_DraggableText(
           text: _formController.price.value,
           size: 10,
           x: Platform.isAndroid
-              ? 340
-              : 340,
+              ? 680
+              : 680,
           y: Platform.isAndroid
-              ? 580
-              : 560,
+              ? 1160
+              : 1140,
           xG: Platform.isAndroid
               ? 340
               : 340,
@@ -289,11 +279,11 @@ class _MyAppStateTest extends State<EditorScreenTest> {
           text: _formController.amountRooms.value,
           size: 10,
           x: Platform.isAndroid
-              ? 175
-              : 175,
+              ? 350
+              : 350,
           y: Platform.isAndroid
-              ? 545
-              : 530,
+              ? 1090
+              : 1060,
           xG: Platform.isAndroid
               ? 150
               : 170,
@@ -306,11 +296,11 @@ class _MyAppStateTest extends State<EditorScreenTest> {
           text: _formController.amountBathRooms.value,
           size: 10,
           x: Platform.isAndroid
-              ? 230
-              : 230,
+              ? 460
+              : 460,
           y: Platform.isAndroid
-              ? 545
-              : 530,
+              ? 1090
+              : 1060,
           xG: Platform.isAndroid
               ? 205
               : 225,
@@ -323,11 +313,11 @@ class _MyAppStateTest extends State<EditorScreenTest> {
           text: _formController.amountGarages.value,
           size: 10,
           x: Platform.isAndroid
-              ? 285
-              : 300,
+              ? 570
+              : 600,
           y: Platform.isAndroid
-              ? 545
-              : 530,
+              ? 1090
+              : 1060,
           xG: Platform.isAndroid
               ? 260
               : 280,
@@ -471,27 +461,29 @@ class _MyAppStateTest extends State<EditorScreenTest> {
     img.Image? img1 = img.decodeImage(bytes!);
     img.Image resized = Platform.isAndroid
         ? img.copyResize(img1!,
-            width: 460,
-            height: 620)
-        : img.copyResize(img1!, width: 460, height: 620);
+            // Imagen background en video ya guardado
+            width: 720,
+            height: 1280)
+        : img.copyResize(img1!, width: 720, height: 1280);
     final resizedImg = Uint8List.fromList(img.encodePng(resized));
 
     final tempImageFile = await _createTempFile(resizedImg);
     _images.add(DraggableResizableItem(
       image: resizedImg,
       x: Platform.isAndroid
-          ? 10
-          : 140,
+          ? 0
+          : 0,
       y: Platform.isAndroid
-          ? 10
-          : 330,
-      xG: Platform.isAndroid ? 0 : 130,
-      yG: Platform.isAndroid ? 10 : 260,
+          ? 0
+          : 0,
+      xG: Platform.isAndroid ? 0 : 0,
+      yG: Platform.isAndroid ? 0 : 0,
       child: Image.file(
         File(tempImageFile.path),
-        width: Platform.isAndroid ? 400 : 460,
-        height: Platform.isAndroid ? 560 : 560,
-        fit: BoxFit.contain,
+        // Imagen background preview
+        width: Platform.isAndroid ? 420 : 480,
+        height: Platform.isAndroid ? 600 : 600,
+        fit: BoxFit.fill,
       ),
     ));
     setState(() {});
@@ -512,19 +504,19 @@ class _MyAppStateTest extends State<EditorScreenTest> {
         _images.add(DraggableResizableItem(
           image: resizedImg,
           x: index == 0
-              ? Platform.isAndroid
-                  ? 290
-                  : 270
-              : Platform.isAndroid
-                  ? -10
-                  : -10,
+              ? Platform.isAndroid // X de Lays
+                  ? 535
+                  : 535
+              : Platform.isAndroid // X de Usuario
+                  ? 50
+                  : 50,
           y: index == 0
-              ? Platform.isAndroid
-                  ? 0
-                  : -10
-              : Platform.isAndroid
-                  ? 510
-                  : 310,
+              ? Platform.isAndroid // Y de Lays
+                  ? 80
+                  : 80
+              : Platform.isAndroid // Y de usuario
+                  ? 1100
+                  : 1100,
           xG: index == 0
               ? Platform.isAndroid
                   ? 290
